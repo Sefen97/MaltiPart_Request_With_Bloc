@@ -33,32 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocProvider.of<FileRequestBloc>(context).add(AddFileEvent());
             }
             if (state is FileRequestSuccessState) {
-              Navigator.pop(context);
-              showDialog(
-                  context: context,
-                  builder: (_) => Center(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height/7,
-                          width: MediaQuery.of(context).size.width/1.1,
-                          child: Card(
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(state.response.message!),
-                                  SizedBox(height: 20,),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child:const  Text("Done"))
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ));
+              pop();
+              _showDialogForSuccessOrField(context: context, state: state);
             }
           },
           builder: (context, state) {
@@ -97,8 +73,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
   TextStyle _style() => const TextStyle(color: Colors.blue, fontSize: 20);
 
+  _showDialogForSuccessOrField({context, state}) => showDialog(
+      context: context,
+      builder: (_) => Center(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height / 7,
+              width: MediaQuery.of(context).size.width / 1.1,
+              child: Card(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(state.response.message!),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            pop();
+                          },
+                          child: const Text("Done"))
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ));
+
   SizedBox _sizedBox(Widget child) => SizedBox(
       height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width / 1,
       child: child);
+
+  pop() => Navigator.pop(context);
 }
