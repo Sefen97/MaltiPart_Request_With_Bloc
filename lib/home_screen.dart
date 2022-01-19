@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocProvider.of<FileRequestBloc>(context).add(AddFileEvent());
             }
             if (state is FileRequestSuccessState) {
-              pop();
+              navigationPop();
               _showDialogForSuccessOrField(context: context, state: state);
             }
           },
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            pop();
+                            navigationPop();
                           },
                           child: const Text("Done"))
                     ],
@@ -106,5 +106,5 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width / 1,
       child: child);
 
-  pop() => Navigator.pop(context);
+  navigationPop() => Navigator.pop(context);
 }
