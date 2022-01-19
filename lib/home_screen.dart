@@ -40,24 +40,25 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.all(6),
-              child: Column(
-                children: [
-                  _sizedBox(InkWell(
-                    onTap: () {
-                      BlocProvider.of<FileRequestBloc>(context)
-                          .add(AddFileInitialEvent());
-                      showDialog(
-                          context: context,
-                          builder: (_) =>
-                              const Center(child: CircularProgressIndicator()));
-                    },
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(child: Text("Add", style: _style()))),
-                  )),
-                ],
-              ),
+              child: ListView.builder(
+                      itemCount: 1,
+                        itemBuilder:(BuildContext context,int index){
+                      return InkWell(
+                        onTap: () {
+                        BlocProvider.of<FileRequestBloc>(context)
+                            .add(AddFileInitialEvent());
+                        showDialog(
+                            context: context,
+                            builder: (_) =>
+                            const Center(child: CircularProgressIndicator()));
+                      },
+                        child:_sizedBox(child: Card(
+                            elevation: 100,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(child: Text("Add", style: _style()))))
+                      );
+                    }),
             );
           },
         ),
@@ -80,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: MediaQuery.of(context).size.height / 7,
               width: MediaQuery.of(context).size.width / 1.1,
               child: Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ));
 
-  SizedBox _sizedBox(Widget child) => SizedBox(
+  SizedBox _sizedBox({Widget? child}) => SizedBox(
       height: MediaQuery.of(context).size.height / 6,
       width: MediaQuery.of(context).size.width / 1,
       child: child);
